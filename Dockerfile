@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM golang:<supported-go-version>-alpine3.22 AS builder
+FROM golang:1.27.3-alpine3.24 AS builder
+
 RUN apk add --no-cache ca-certificates git
 RUN apk add build-base
 
@@ -26,7 +27,7 @@ COPY . .
 ARG SKAFFOLD_GO_GCFLAGS
 RUN go build -gcflags="${SKAFFOLD_GO_GCFLAGS}" -o /productcatalogservice .
 
-FROM alpine:3.22 AS without-grpc-health-probe-bin
+FROM alpine:3.24 AS without-grpc-health-probe-bin
 RUN apk add --no-cache ca-certificates
 
 WORKDIR /src
